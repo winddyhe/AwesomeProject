@@ -1,8 +1,8 @@
 'use strict'
 
+import React, { Component } from 'react';
 
 import {
-    Component,
     StyleSheet,
     Text,
     View,
@@ -21,6 +21,20 @@ class RefreshableListView extends Component {
             loadMoreText: this.props.loadMoreText ? this.props.loadMoreText : 'Load More...',
             renderHeader: this.props.renderHeader ? this.props.renderHeader : null,
         };
+    }
+
+    renderRow(row){
+        return this.state.renderRow(row);
+    }
+
+    onRefresh(page=1, callback, options){
+        this.props.onRefresh(page, callback);
+    }
+
+    renderPaginationAllLoadedView(){
+        return(
+            <View />
+        );
     }
 
     render() {
@@ -52,19 +66,7 @@ class RefreshableListView extends Component {
         );
     }
 
-    renderRow(row){
-        return this.state.renderRow(row);
-    }
 
-    onRefresh(page=1, callback, options){
-        this.props.onRefresh(page, callback, options);
-    }
-
-    renderPaginationAllLoadedView(){
-        return(
-            <View />
-        );
-    }
 
     renderPaginationWaitingView(paginateCallback){
         return (
@@ -86,7 +88,7 @@ class RefreshableListView extends Component {
 }
 
 
-var styles = StyleSheet.Create() {
+var styles = StyleSheet.create({
     container: {
         flex:1,
     },
@@ -108,7 +110,7 @@ var styles = StyleSheet.Create() {
         fontSize: 15,
         color: 'gray',
     }
-}
+});
 
 
 export default RefreshableListView;

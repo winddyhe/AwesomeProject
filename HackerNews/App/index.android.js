@@ -1,9 +1,8 @@
-'use strict'
+import React, { Component } from 'react';
 
-import React, {
+import {
     AppRegistry,
     StyleSheet,
-    Component,
     Navigator,
     View,
     WebView,
@@ -12,16 +11,22 @@ import React, {
 
 //import ToolbarAndroid from 'ToolbarAndroid';
 
+import Dashboard from './Views/Dashboard/index.android.js';
 
 class HackNews extends Component {
 
+    constructor(){
+        super();
+    }
+
     componentDidMount() {
-        var navigator = this._navigator;
+        var navigator = HackNews._navigator;
         BackAndroid.addEventListener('hardwareBackPress', () => {
-            if (_navigator.getCurrentRoutes().Length === 1) {
+            console.log("------------", navigator.getCurrentRoutes().Length);
+            if (navigator.getCurrentRoutes().Length === 1) {
                 return false;
             }
-            _navigator.pop();
+            navigator.pop();
             return true;
         });
     }
@@ -43,7 +48,7 @@ class HackNews extends Component {
 
     navigatorRenderScene(router, navigator) {
         var Component = null;
-        this._navigator = navigator;
+        HackNews._navigator = navigator;
         switch (router.id) {
             case 'Dashboard':
                 return (<Dashboard navigator={navigator}/>);
@@ -54,6 +59,8 @@ class HackNews extends Component {
         }
     }
 };
+
+HackNews._navigator = null;
 
 var styles = StyleSheet.create({
     container: {
@@ -66,4 +73,4 @@ var styles = StyleSheet.create({
     }
 });
 
-module.exports = HackNews;
+export default HackNews;

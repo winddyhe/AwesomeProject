@@ -1,7 +1,7 @@
-'use strict'
 
-import React, {
-    Component,
+import React, { Component } from 'react';
+
+import {
     StyleSheet,
     Text,
     View,
@@ -13,24 +13,29 @@ import React, {
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class CustomTabBar extends Component {
-    selectedTabIcons: [],
-    unselectedTabIcons: [],
 
-    PropTypes: {
+    constructor(props) {
+        super(props);
+        // this.selectedTabIcons = [];
+        // this.unselectedTabIcons = [];
+    }
+
+    static PropTypes: {
         goToPage: React.PropTypes.func,
         activeTab: React.PropTypes.number,
         tabs: React.PropTypes.array,
-    },
+    };
 
     componentDidMount() {
         this.setAnimationValue({ value: this.props.activeTab });
-        this._listener = this.props.scrollValue.addListener(tis.setAnimationValue);
+        this._listener = this.props.scrollValue.addListener(this.setAnimationValue);
     }
 
     setAnimationValue({value}){
-        var currentPage = this.props.activeTab;
-    
-        this.unselectedTabIcons.forEach((icon, i)=>{
+        var currentPage = this.activeTab;
+
+        console.log('-----------------', CustomTabBar.unselectedTabIcons);
+        CustomTabBar.unselectedTabIcons.forEach((icon, i)=>{
             var iconRef = icon;
             if (!icon.setNativeProps && icon !== null){
                 iconRef = icon.refs.icon_image;
@@ -50,13 +55,13 @@ class CustomTabBar extends Component {
         var numberOfTabs = this.props.tabs.length;
         var tabUnderLineStyle = {
             position: 'absolute',
-            width: containerWidth / numberOfTabs;
+            width: containerWidth / numberOfTabs,
             height: 3,
             backgroundColor: '#FF6600',
             bottom: 0,
         };
 
-        var left = this.props.srcollValue.interpolate({
+        var left = this.props.scrollValue.interpolate({
             inputRange: [0, 1], outputRange: [0, containerWidth / numberOfTabs]
         });
 
@@ -91,12 +96,14 @@ class CustomTabBar extends Component {
     }
 };
 
+CustomTabBar.unselectedTabIcons = [];
+
 var styles = StyleSheet.create({
     tab:{
         flex:1,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingBattom: 6,
+        paddingBottom: 6,
     },
     tabs:{
         height: 45,
