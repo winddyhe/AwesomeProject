@@ -16,8 +16,8 @@ class TabBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            structure: this.props.structure,
-            selectedTab: this.props.selectedTab,
+            structure: this.props._structure,
+            selectedTab: this.props._selectedTab,
             iconSize: this.props.iconSize ? this.props.iconSize : 30,
             activeTintColor: this.props.activeTintColor ? this.props.activeTintColor : null
         };
@@ -25,8 +25,7 @@ class TabBar extends Component {
 
     render() {
         return (
-            <ScrollableTabView renderTabBar={()=><CustomTabBar/>}
-                               onChangeTab={(o)=>{}}
+            <ScrollableTabView renderTabBar={()=><CustomTabBar />}
                                tabBarPosition={'bottom'}
                                initialPage={this.state.selectedTab}>
                 {this.state.structure.map((tabProps, tabIndex)=>

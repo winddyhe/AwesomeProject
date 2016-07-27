@@ -13,6 +13,11 @@ import {
 import GiftedListView from 'react-native-gifted-listview';
 
 class RefreshableListView extends Component {
+
+    static PropTypes: {
+        _onRefresh: React.PropTypes.func,
+    };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -23,26 +28,12 @@ class RefreshableListView extends Component {
         };
     }
 
-    renderRow(row){
-        return this.state.renderRow(row);
-    }
-
-    onRefresh(page=1, callback, options){
-        this.props.onRefresh(page, callback);
-    }
-
-    renderPaginationAllLoadedView(){
-        return(
-            <View />
-        );
-    }
-
     render() {
         return (
             <View style={[styles.container, { backgroundColor: this.state.backgroundColor }, this.props.style]}>
                 <View style={styles.navBarSpace} />
 	            <GiftedListView rowView={this.renderRow}
-                                onFetch={this.onRefresh}
+                                onFetch={this._onRefresh}
                                 paginationAllLoadedView={this.renderPaginationAllLoadedView}
                                 paginationWaitingView={this.renderPaginationWaitingView}
                                 headerView={this.renderHeaderView}
@@ -61,12 +52,26 @@ class RefreshableListView extends Component {
                                         height: 60,
                                     }
                                 }} 
+                                enableEmptySections = {true} 
                 />
             </View>
         );
     }
 
 
+    onRefresh(page, callback, options){
+        this.props._onRefresh(page, callback);
+    }
+
+    renderRow(row){
+        return this.state.renderRow(row);
+    }
+
+    renderPaginationAllLoadedView(){
+        return(
+            <View />
+        );
+    }
 
     renderPaginationWaitingView(paginateCallback){
         return (
@@ -80,9 +85,9 @@ class RefreshableListView extends Component {
     }
 
     renderHeaderView(){
-        if (this.state.renderHeader){
-            return this.props.renderHeader();
-        }
+        // if (this.state.renderHeader){
+        //     return this.props.renderHeader();
+        // }
         return (null);
     }
 }
@@ -93,7 +98,7 @@ var styles = StyleSheet.create({
         flex:1,
     },
     navBarSpace: {
-        height: (Platform.OS !== 'android') ? 64 : 0,
+        height: 0,
     },
     rowContainer: {
         paddingRight: 15,

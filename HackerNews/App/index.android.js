@@ -15,10 +15,6 @@ import Dashboard from './Views/Dashboard/index.android.js';
 
 class HackNews extends Component {
 
-    constructor(){
-        super();
-    }
-
     componentDidMount() {
         var navigator = HackNews._navigator;
         BackAndroid.addEventListener('hardwareBackPress', () => {
@@ -53,9 +49,9 @@ class HackNews extends Component {
             case 'Dashboard':
                 return (<Dashboard navigator={navigator}/>);
             case 'Post':
-                return (<Dashboard navigator={navigator}/>);
+                return null;
             case 'Web':
-                return (<Dashboard navigator={navigator}/>);
+                return null;
         }
     }
 };

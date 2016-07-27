@@ -12,7 +12,7 @@ import {
 import ToolbarAndroid from 'ToolbarAndroid';
 import TabBar from '../../Components/TabBar/index.js';
 import RefreshableListView from '../../Components/RefreshableListView/index.js';
-import api from'../../Network/api.js';
+var api = require('../../Network/api.js');
 
 class Dashboard extends Component {
 
@@ -26,7 +26,8 @@ class Dashboard extends Component {
 
     render() {
         return (
-            <TabBar structure={[{
+            <TabBar _structure={[
+            {
                 title: 'Ask HN',
                 iconName: 'comment',
                 renderContent: () => {
@@ -36,7 +37,7 @@ class Dashboard extends Component {
                                         title={'Ask HN'}
                                         titleColor={'#FFFFFF'}/>
                         <RefreshableListView renderRow={(row)=> this.renderListViewRow(row, 'Ask Stroy')}
-                                             onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_ASK_STORIES_ENDPOINT)}
+                                             _onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_ASK_STORIES_ENDPOINT)}
                                              backgroundColor={'#F6F6EF'}/>
                     </View>
                 );}
@@ -47,11 +48,11 @@ class Dashboard extends Component {
                 renderContent: () => {
                     return(
                     <View style={{flex:1}}>
-                        <ToolbarAndroid style={styles.toolbar}
+                        <ToolbarAndroid style={styles.toolBar}
                                         title={'Show HN'}
                                         titleColor={'#FFFFFF'}/>
 	                    <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Show Story')}
-                                             onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_SHOW_STORIES_ENDPOINT)}
+                                             _onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_SHOW_STORIES_ENDPOINT)}
                                              backgroundColor={'#F6F6EF'}/>
                     </View>
                 );}
@@ -62,11 +63,11 @@ class Dashboard extends Component {
                 renderContent: () => {
                     return(
                     <View style={{flex:1}}>
-                        <ToolbarAndroid style={styles.toolbar}
+                        <ToolbarAndroid style={styles.toolBar}
                                         title={'Top Stories'}
                                         titleColor={'#FFFFFF'}/>
 	                    <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Top Story')}
-                        	                 onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_TOP_STORIES_ENDPOINT)}
+                        	                 _onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_TOP_STORIES_ENDPOINT)}
                                              backgroundColor={'#F6F6EF'}/>
 	                </View>
                 );}
@@ -77,11 +78,11 @@ class Dashboard extends Component {
                 renderContent: () => {
                     return(
                     <View style={{flex:1}}>
-                        <ToolbarAndroid style={styles.toolbar}
+                        <ToolbarAndroid style={styles.toolBar}
                         	            title={'New Stories'}
                                         titleColor={'#FFFFFF'}/>
 	                    <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'New Story')}
-                                             onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_NEW_STORIES_ENDPOINT)}
+                                             _onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_NEW_STORIES_ENDPOINT)}
                                              backgroundColor={'#F6F6EF'}/>
                     </View>
                 );}
@@ -92,17 +93,17 @@ class Dashboard extends Component {
                 renderContent: () => {
                     return(
                     <View style={{flex:1}}>
-                        <ToolbarAndroid style={styles.toolbar}
+                        <ToolbarAndroid style={styles.toolBar}
                                         title={'Jobs'}
                                         titleColor={'#FFFFFF'}/>
 	                    <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Job Post')}
-                        	                 onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_JOB_STORIES_ENDPOINT)}
+                        	                 _onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_JOB_STORIES_ENDPOINT)}
                                              backgroundColor={'#F6F6EF'}/>
 	                </View>
                 );}
             },
             ]}
-            selectedTab={2}
+            _selectedTab={2}
             activeTintColor={'#FF8533'}
             iconSize={20}
             />
