@@ -10,7 +10,7 @@ import {
     Platform,
 } from 'react-native';
 
-import GiftedListView from 'react-native-gifted-listview';
+var GiftedListView = require('react-native-gifted-listview');
 
 class RefreshableListView extends Component {
 
@@ -22,6 +22,7 @@ class RefreshableListView extends Component {
         super(props);
         this.state = {
             renderRow: this.props.renderRow,
+            onRefresh2: this.props._onRefresh,
             backgroundColor: this.props.backgroundColor ? this.props.backgroundColor : '#FFFFFF',
             loadMoreText: this.props.loadMoreText ? this.props.loadMoreText : 'Load More...',
             renderHeader: this.props.renderHeader ? this.props.renderHeader : null,
@@ -33,7 +34,7 @@ class RefreshableListView extends Component {
             <View style={[styles.container, { backgroundColor: this.state.backgroundColor }, this.props.style]}>
                 <View style={styles.navBarSpace} />
 	            <GiftedListView rowView={this.renderRow}
-                                onFetch={this._onRefresh}
+                                onFetch={this.onRefresh1}
                                 paginationAllLoadedView={this.renderPaginationAllLoadedView}
                                 paginationWaitingView={this.renderPaginationWaitingView}
                                 headerView={this.renderHeaderView}
@@ -59,11 +60,12 @@ class RefreshableListView extends Component {
     }
 
 
-    onRefresh(page, callback, options){
-        this.props._onRefresh(page, callback);
+    onRefresh1(page=1, callback, options) {
+        //this.state.onRefresh2(page, callback);
     }
 
     renderRow(row){
+        console.log('-----------------------1111  ', row);
         return this.state.renderRow(row);
     }
 

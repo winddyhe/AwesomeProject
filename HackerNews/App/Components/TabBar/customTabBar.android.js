@@ -72,7 +72,7 @@ class CustomTabBar extends Component {
                 <View style={styles.tabs}>
                     {this.props.tabs.map((tab, i)=>{ this.renderTabOption(tab, i) })}
                 </View>
-                <Animated.View style={[tabUnderLineStyle, {left}]}/>
+                <Animated.View style={[tabUnderLineStyle, {left}]} />
             </View> 
         );
     }
@@ -81,13 +81,10 @@ class CustomTabBar extends Component {
         var vals = valsString.split('!$#');
         var isTabActive = this.props.activeTab === page;
         return (
-            <TouchableOpacity key = {valsString}
-                              onPress={()=>{this.props.goToPage(page)}}
-                              style={styles.tab}>
+            <TouchableOpacity key = {valsString} onPress={()=>{this.props.goToPage(page)}} style={styles.tab}>
                 <Icon name={vals[1]}
-                      size={vals[parseInt(vals[2])]}
-                      color={'gray'} 
-                />
+                      size1={parseInt(vals[2])}
+                      color={'gray'} />
                 <Text style={styles.labelText}>
                     {vals[0]}
                 </Text>
@@ -99,13 +96,13 @@ class CustomTabBar extends Component {
 CustomTabBar.unselectedTabIcons = [];
 
 var styles = StyleSheet.create({
-    tab:{
-        flex:1,
+    tab: {
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         paddingBottom: 6,
     },
-    tabs:{
+    tabs: {
         height: 45,
         flexDirection: 'row',
         paddingTop: 5,
@@ -113,7 +110,7 @@ var styles = StyleSheet.create({
         borderTopWidth: 0,
         borderLeftWidth: 0,
         borderRightWidth: 0,
-        borderBottomColor: 'rgba(0, 0, 0, 0.05)',
+        borderBottomColor: 'rgba(0,0,0,0.05)',
     },
     icon: {
         width: 30,
@@ -122,12 +119,12 @@ var styles = StyleSheet.create({
         top: 0,
         left: 20,
     },
-    labelText:{
+    labelText: {
         fontSize: 8,
     },
-    separator:{
+    separator: {
         height: 0.5,
-        backgroundColor:'gray',
+        backgroundColor: 'gray'
     }
 });
 

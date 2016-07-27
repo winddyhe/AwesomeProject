@@ -26,6 +26,7 @@ class TabBar extends Component {
     render() {
         return (
             <ScrollableTabView renderTabBar={()=><CustomTabBar />}
+							   onChangeTab={(o)=>{}}
                                tabBarPosition={'bottom'}
                                initialPage={this.state.selectedTab}>
                 {this.state.structure.map((tabProps, tabIndex)=>

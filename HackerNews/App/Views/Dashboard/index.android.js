@@ -33,7 +33,7 @@ class Dashboard extends Component {
                 renderContent: () => {
                     return (
                     <View style={{flex:1}}>
-                        <ToolbarAndroid style={styles.toolBar}
+                        <ToolbarAndroid style={styles.toolbar}
                                         title={'Ask HN'}
                                         titleColor={'#FFFFFF'}/>
                         <RefreshableListView renderRow={(row)=> this.renderListViewRow(row, 'Ask Stroy')}
@@ -48,7 +48,7 @@ class Dashboard extends Component {
                 renderContent: () => {
                     return(
                     <View style={{flex:1}}>
-                        <ToolbarAndroid style={styles.toolBar}
+                        <ToolbarAndroid style={styles.toolbar}
                                         title={'Show HN'}
                                         titleColor={'#FFFFFF'}/>
 	                    <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Show Story')}
@@ -63,7 +63,7 @@ class Dashboard extends Component {
                 renderContent: () => {
                     return(
                     <View style={{flex:1}}>
-                        <ToolbarAndroid style={styles.toolBar}
+                        <ToolbarAndroid style={styles.toolbar}
                                         title={'Top Stories'}
                                         titleColor={'#FFFFFF'}/>
 	                    <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Top Story')}
@@ -78,7 +78,7 @@ class Dashboard extends Component {
                 renderContent: () => {
                     return(
                     <View style={{flex:1}}>
-                        <ToolbarAndroid style={styles.toolBar}
+                        <ToolbarAndroid style={styles.toolbar}
                         	            title={'New Stories'}
                                         titleColor={'#FFFFFF'}/>
 	                    <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'New Story')}
@@ -93,7 +93,7 @@ class Dashboard extends Component {
                 renderContent: () => {
                     return(
                     <View style={{flex:1}}>
-                        <ToolbarAndroid style={styles.toolBar}
+                        <ToolbarAndroid style={styles.toolbar}
                                         title={'Jobs'}
                                         titleColor={'#FFFFFF'}/>
 	                    <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Job Post')}
@@ -114,11 +114,11 @@ class Dashboard extends Component {
         return (
             <TouchableHighlight underlayColor={'#f3f3f2'}
                                 onPress={()=>this.selectRow(row, pushNavBarTitle)}>
-                <View style={styles,rowContainer}>
+                <View style={styles.rowContainer}>
                     <Text style={styles.rowCount}>
                         {row.count}
                     </Text>
-                    <View style={style.rowDetailsContainer}>
+                    <View style={styles.rowDetailsContainer}>
                         <Text style={styles.rowTitle}>
                             {row.title}
                         </Text>
@@ -181,42 +181,42 @@ class Dashboard extends Component {
 
 var styles = StyleSheet.create({
     container: {
-        flex:1,
+        flex: 1
     },
-    toolBar:{
+    toolbar: {
         height: 56,
-        backgroundColor:'#FF6600'
+        backgroundColor: '#FF6600'
     },
-    rowContainer:{
-        flex:1,
-        flexDirection:'row',
-        alignItems:'center',
+    rowContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
     },
-    rowCount:{
+    rowCount: {
         fontSize: 20,
-        textAlign:'right',
-        color:'gray',
-        margin:10,
-        marginLeft:15,
+        textAlign: 'right',
+        color: 'gray',
+        margin: 10,
+        marginLeft: 15,
     },
-    rowDetailsContainer:{
-        flex:1,
+    rowDetailsContainer: {
+        flex: 1,
     },
-    rowTitle:{
-        fontSize:15,
-        textAlign:'left',
-        marginTop:10,
-        marginBottom:4,
-        marginRight:10,
-        color:'#FF6600',
+    rowTitle: {
+        fontSize: 15,
+        textAlign: 'left',
+        marginTop: 10,
+        marginBottom: 4,
+        marginRight: 10,
+        color: '#FF6600'
     },
-    rowDetailsLine:{
+    rowDetailsLine: {
         fontSize: 12,
         marginBottom: 10,
         color: 'gray',
     },
-    separator:{
-        height:1,
+    separator: {
+        height: 1,
         backgroundColor: '#CCCCCC'
     }
 });

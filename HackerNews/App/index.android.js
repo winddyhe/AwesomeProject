@@ -13,6 +13,9 @@ import {
 
 import Dashboard from './Views/Dashboard/index.android.js';
 
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+
 class HackNews extends Component {
 
     componentDidMount() {
