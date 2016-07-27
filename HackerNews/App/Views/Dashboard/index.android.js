@@ -37,7 +37,7 @@ class Dashboard extends Component {
                                         title={'Ask HN'}
                                         titleColor={'#FFFFFF'}/>
                         <RefreshableListView renderRow={(row)=> this.renderListViewRow(row, 'Ask Stroy')}
-                                             _onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_ASK_STORIES_ENDPOINT)}
+                                             onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_ASK_STORIES_ENDPOINT)}
                                              backgroundColor={'#F6F6EF'}/>
                     </View>
                 );}
@@ -52,7 +52,7 @@ class Dashboard extends Component {
                                         title={'Show HN'}
                                         titleColor={'#FFFFFF'}/>
 	                    <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Show Story')}
-                                             _onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_SHOW_STORIES_ENDPOINT)}
+                                             onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_SHOW_STORIES_ENDPOINT)}
                                              backgroundColor={'#F6F6EF'}/>
                     </View>
                 );}
@@ -67,7 +67,7 @@ class Dashboard extends Component {
                                         title={'Top Stories'}
                                         titleColor={'#FFFFFF'}/>
 	                    <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Top Story')}
-                        	                 _onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_TOP_STORIES_ENDPOINT)}
+                        	                 onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_TOP_STORIES_ENDPOINT)}
                                              backgroundColor={'#F6F6EF'}/>
 	                </View>
                 );}
@@ -82,7 +82,7 @@ class Dashboard extends Component {
                         	            title={'New Stories'}
                                         titleColor={'#FFFFFF'}/>
 	                    <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'New Story')}
-                                             _onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_NEW_STORIES_ENDPOINT)}
+                                             onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_NEW_STORIES_ENDPOINT)}
                                              backgroundColor={'#F6F6EF'}/>
                     </View>
                 );}
@@ -97,7 +97,7 @@ class Dashboard extends Component {
                                         title={'Jobs'}
                                         titleColor={'#FFFFFF'}/>
 	                    <RefreshableListView renderRow={(row)=>this.renderListViewRow(row, 'Job Post')}
-                        	                 _onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_JOB_STORIES_ENDPOINT)}
+                        	                 onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback, api.HN_JOB_STORIES_ENDPOINT)}
                                              backgroundColor={'#F6F6EF'}/>
 	                </View>
                 );}
@@ -151,8 +151,8 @@ class Dashboard extends Component {
         var endIndex = (startIndex + amountToAdd) < topStroyIDs.length ? (startIndex + amountToAdd) : topStroyIDs.length;
 
         function iterateAndFetch(){
-            if (startInde < endIndex){
-	            fetch(api.HN_ITEM_ENDPOINT+topStoryIDs[startIndex]+".json")
+            if (startIndex < endIndex){
+	            fetch(api.HN_ITEM_ENDPOINT+topStroyIDs[startIndex]+".json")
                 .then((response) => response.json())
                 .then((topStory) => {
                     topStory.count = startIndex+1;

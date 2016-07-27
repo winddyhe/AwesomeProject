@@ -20,15 +20,15 @@ class CustomTabBar extends Component {
         // this.unselectedTabIcons = [];
     }
 
-    static PropTypes: {
+    propTypes: {
         goToPage: React.PropTypes.func,
         activeTab: React.PropTypes.number,
         tabs: React.PropTypes.array,
-    };
+    }
 
     componentDidMount() {
-        this.setAnimationValue({ value: this.props.activeTab });
-        this._listener = this.props.scrollValue.addListener(this.setAnimationValue);
+        //this.setAnimationValue({ value: this.props.activeTab });
+        this.props.scrollValue.addListener(this.setAnimationValue);
     }
 
     setAnimationValue({value}){
@@ -70,7 +70,7 @@ class CustomTabBar extends Component {
                 <StatusBar backgroundColor={'#d25500'} />
                 <View style={styles.separator}/>
                 <View style={styles.tabs}>
-                    {this.props.tabs.map((tab, i)=>{ this.renderTabOption(tab, i) })}
+                    {this.props.tabs.map((tab, i)=> this.renderTabOption(tab, i) )}
                 </View>
                 <Animated.View style={[tabUnderLineStyle, {left}]} />
             </View> 
@@ -80,14 +80,18 @@ class CustomTabBar extends Component {
     renderTabOption(valsString, page){
         var vals = valsString.split('!$#');
         var isTabActive = this.props.activeTab === page;
+        const color = isTabActive ? "#6B8E23" : "#ADADAD";
         return (
-            <TouchableOpacity key = {valsString} onPress={()=>{this.props.goToPage(page)}} style={styles.tab}>
-                <Icon name={vals[1]}
-                      size1={parseInt(vals[2])}
-                      color={'gray'} />
-                <Text style={styles.labelText}>
-                    {vals[0]}
-                </Text>
+            <TouchableOpacity key = {valsString} onPress={()=>this.props.goToPage(page)} style={styles.tab}>
+                <View style={styles.tabItem}>
+                    <Icon name={vals[1]}
+                        size={parseInt(vals[2])}
+                        color={color}
+                    />
+                    <Text style={styles.labelText}>
+                        {vals[0]}
+                    </Text>
+                </View>
             </TouchableOpacity>
         );
     }
@@ -103,7 +107,7 @@ var styles = StyleSheet.create({
         paddingBottom: 6,
     },
     tabs: {
-        height: 45,
+        height: 60,
         flexDirection: 'row',
         paddingTop: 5,
         borderWidth: 1,
@@ -113,19 +117,23 @@ var styles = StyleSheet.create({
         borderBottomColor: 'rgba(0,0,0,0.05)',
     },
     icon: {
-        width: 30,
-        height: 30,
+        width: 50,
+        height: 50,
         position: 'absolute',
         top: 0,
         left: 20,
     },
     labelText: {
-        fontSize: 8,
+        fontSize:12,
     },
     separator: {
         height: 0.5,
         backgroundColor: 'gray'
-    }
+    },
+    tabItem: {
+		flexDirection: 'column',
+		alignItems: 'center',
+	},
 });
 
 export default CustomTabBar;

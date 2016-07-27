@@ -14,15 +14,15 @@ var GiftedListView = require('react-native-gifted-listview');
 
 class RefreshableListView extends Component {
 
-    static PropTypes: {
-        _onRefresh: React.PropTypes.func,
-    };
+    propTypes: {
+        onRefresh: React.PropTypes.func,
+    }
 
     constructor(props) {
         super(props);
         this.state = {
             renderRow: this.props.renderRow,
-            onRefresh2: this.props._onRefresh,
+            onRefresh: this.props.onRefresh,
             backgroundColor: this.props.backgroundColor ? this.props.backgroundColor : '#FFFFFF',
             loadMoreText: this.props.loadMoreText ? this.props.loadMoreText : 'Load More...',
             renderHeader: this.props.renderHeader ? this.props.renderHeader : null,
@@ -33,11 +33,11 @@ class RefreshableListView extends Component {
         return (
             <View style={[styles.container, { backgroundColor: this.state.backgroundColor }, this.props.style]}>
                 <View style={styles.navBarSpace} />
-	            <GiftedListView rowView={this.renderRow}
-                                onFetch={this.onRefresh1}
-                                paginationAllLoadedView={this.renderPaginationAllLoadedView}
-                                paginationWaitingView={this.renderPaginationWaitingView}
-                                headerView={this.renderHeaderView}
+	            <GiftedListView rowView={this.renderRow.bind(this)}
+                                onFetch={this.onRefresh.bind(this)}
+                                paginationAllLoadedView={this.renderPaginationAllLoadedView.bind(this)}
+                                paginationWaitingView={this.renderPaginationWaitingView.bind(this)}
+                                headerView={this.renderHeaderView.bind(this)}
                                 PullToRefreshViewAndroidProps={{
                                     color: ['#F6F6EF'],
                                     progressBackgroundColor: '#FF6600',
@@ -60,12 +60,11 @@ class RefreshableListView extends Component {
     }
 
 
-    onRefresh1(page=1, callback, options) {
-        //this.state.onRefresh2(page, callback);
+    onRefresh(page=1, callback, options) {
+        this.state.onRefresh(page, callback);
     }
 
     renderRow(row){
-        console.log('-----------------------1111  ', row);
         return this.state.renderRow(row);
     }
 
@@ -87,9 +86,9 @@ class RefreshableListView extends Component {
     }
 
     renderHeaderView(){
-        // if (this.state.renderHeader){
-        //     return this.props.renderHeader();
-        // }
+        if (this.state.renderHeader){
+            return this.props.renderHeader();
+        }
         return (null);
     }
 }

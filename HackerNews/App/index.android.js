@@ -40,7 +40,7 @@ class HackNews extends Component {
                 style={styles.container}
                 tintColor='#FF6600'
                 initialRoute={{ id: 'Dashboard' }}
-                renderScene={this.navigatorRenderScene}
+                renderScene={this.navigatorRenderScene.bind(this)}
                 />
         );
     }
