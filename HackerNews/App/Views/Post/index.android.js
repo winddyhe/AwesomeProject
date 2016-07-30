@@ -1,7 +1,5 @@
-'use strict'
-
-var import React, {Component} from 'react';
-var import {
+import React, {Component} from 'react';
+import {
     StyleSheet,
     Text,
     View,
@@ -9,12 +7,21 @@ var import {
 } from 'react-native';
 
 import ToolbarAndroid from 'ToolbarAndroid';
-import api from './../../network/api.js';
+import api from './../../Network/api.js';
 import RefreshableListView from './../../Components/RefreshableListView';
-import Commnet from './Elements/Comment';
+import Comment from './Elements/Comment';
 
 
 class Post extends Component {
+
+    constructor(props){
+        super(props);
+        
+        this.renderListViewHeader = this.renderListViewHeader.bind(this);
+        this.renderSourceButton = this.renderSourceButton.bind(this);
+        this.pushSourceWebpage = this.pushSourceWebpage.bind(this);
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -24,7 +31,7 @@ class Post extends Component {
                                 onIconClicked={this.props.navigator.pop}
                                 titleColor={'#FFFFFF'}/>
                 <RefreshableListView renderRow={(row)=>this.renderListViewRow(row)}
-                                     renderHeader={this.renderListViewHeader.bind(this)}
+                                     renderHeader={this.renderListViewHeader}
                                      onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback)}
                                      backgroundColor={'#F6F6EF'}
                                      loadMoreText={'Load More...'}/>
@@ -41,8 +48,17 @@ class Post extends Component {
             );
         }
         return (
-            <Comment data={row}>
+            <Comment data={row}/>
         );
+    }
+
+    pushSourceWebpage() {
+        console.log('-------------------- cao ni ma ...');
+        this.props.navigator.push({
+            id: 'Web',
+            title: this.props.post.title,
+            url: this.props.post.url
+        });
     }
 
     renderListViewHeader(){
@@ -52,9 +68,14 @@ class Post extends Component {
                     {this.props.post.title}
                 </Text>
                 {this.renderPostText()}
-                {this.renderSourceButton()}
+	            <TouchableHighlight onPress={()=>this.pushSourceWebPage()}
+                                    underlayColor='#FFFF00'>
+                    <Text style={styles.headerSourceLabel}>
+                        (Source)
+                    </Text>
+                </TouchableHighlight>
                 <Text style={styles.headerPostDetailsLine}>
-                    Post by {this.props.post.by} | {this.props.post.source} Points
+                    Post by {this.props.post.by} | {this.props.post.score} Points
                 </Text>
                 <View style={styles.separator}/>
                 <Text style={styles.headerCommentTitle}>
@@ -73,69 +94,61 @@ class Post extends Component {
                 {this.fixPostText(this.props.post.text)}
             </Text>
         );
-    }
+    }    
 
     renderSourceButton(){
         if (!this.props.post.url){
             return null;
         }
         return (
-            <TouchableHighlight onPress={()=>this.pushSourceWebPage()}
+            <TouchableHighlight onPress={this.pushSourceWebpage}
                                 underlayColor='#F6F6EF'>
                 <Text style={styles.headerSourceLabel}>
                     (Source)
                 </Text>
-            </TouchableHighlight>  
+            </TouchableHighlight>
         );
     }
 
-    listViewOnRefresh(page, callback){
-        if (!this.props.post.kids){
-            callback([], {callLoaded: true});
+    listViewOnRefresh(page, callback) {
+        if (!this.props.post.kids) {
+            callback([], { callLoaded: true });
         }
-        else if (page != 1){
-            this.fetchCommnetsUsingKids(this.props.post.kids, this.state.lastIndex, 3, callback);
+        else if (page != 1) {
+            this.fetchCommentsUsingKids(this.props.post.kids, this.state.lastIndex, 3, callback);
         }
-        else{
-            this.fetchCommnetsUsingKids(this.props.post.kids, 0, 3, callback);
+        else {
+            this.fetchCommentsUsingKids(this.props.post.kids, 0, 3, callback);
         }
     }
 
     fetchCommentsUsingKids(kids, startIndex, amountToAdd, callback) {
-        var rowsData =[];
-        var endIndex = (startIndex + amountToAdd) < kids.length ? (startIndex + amountToAdd): kids.length;
+        var rowsData = [];
+        var endIndex = (startIndex + amountToAdd) < kids.length ? (startIndex + amountToAdd) : kids.length;
         function iterateAndFetch() {
-        if (startIndex < endIndex){
-            fetch(api.HN_ITEM_ENDPOINT + kids[startIndex] + ".json")
-                .then((response) => response.json())
-                .then((item) => {
-                    item.count = startIndex + 1;
-                    if (!item.deleted) {
-                        rowsData.push(item);
-                    }
-                    startIndex++;
-                    iterateAndFetch();
-                })
-                .done();
-        }
-        else {
-            callback(rowsData, { allLoaded: endIndex == kids.length });
-        return;
-        }
+            if (startIndex < endIndex) {
+                fetch(api.HN_ITEM_ENDPOINT + kids[startIndex] + ".json")
+                    .then((response) => response.json())
+                    .then((item) => {
+                        item.count = startIndex + 1;
+                        if (!item.deleted) {
+                            rowsData.push(item);
+                        }
+                        startIndex++;
+                        iterateAndFetch();
+                    })
+                    .done();
+            }
+            else {
+                callback(rowsData, { allLoaded: endIndex == kids.length });
+                return;
+            }
         }
         iterateAndFetch();
-        this.setState({lastIndex: endIndex});
+        this.setState({ lastIndex: endIndex });
     }
 
-    pushSourceWebpage: function() {
-        this.props.navigator.push({
-            id: 'Web',
-            title: this.props.post.title,
-            url: this.props.post.url
-	    });
-    }
-
-    fixPostText: function(str){
+    fixPostText(str){
     	return String(str).replace(/<p>/g, '\n\n')
                           .replace(/&#x2F;/g, '/')
                           .replace('<i>', '')

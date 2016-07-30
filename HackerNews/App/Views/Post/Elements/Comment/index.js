@@ -13,7 +13,7 @@ import api from '../../../../Network/api.js';
 
 class Comment extends Component {
     
-    displayName: 'Comment',
+    displayName: 'Comment';
     
     constructor(props) {
         super(props);
@@ -71,7 +71,7 @@ class Comment extends Component {
         if (this.props.data.kids){
             return (
                 <TouchableHighlight onPress={()=>this.onShowReplies()}
-                                    style={styles.showRepliesButtonText}
+                                    style={styles.showRepliesButton}
                                     underlayColor='#F6F6EF'>
                     {this.getRepliesControlButtonText()}
                 </TouchableHighlight>
@@ -105,37 +105,37 @@ class Comment extends Component {
             });
         }
         else{
-            this.setState({
-                subCommentsLoading: true
-            });
-            var subCommentIDs = this.props.data.kids;
-            var subCommentsData = [];
-            var index = 0;
-            var _this = this;
-            function iterateAndFetch() {
-                if (index < subCommentIDs.length){
-                    fetch(api.HN_ITEM_ENDPOINT+subCommentIDs[index]+'.json')
-                    .then((response)=>response.json())
-                    .then((item)=>{
-                        item.count = index + 1;
-                        if (!item.deleted){
-                            subCommentsData.push(item);
+    		this.setState({
+    			subCommentsLoading: true
+    		});
+    		var subCommentIDs = this.props.data.kids;
+		    var subCommentsData = [];
+		    var index = 0;
+		    var _this = this;
+		    function iterateAndFetch(){
+		        if (index < subCommentIDs.length){
+		            fetch(api.HN_ITEM_ENDPOINT+subCommentIDs[index]+".json")
+		            .then((response) => response.json())
+		            .then((item) => {
+		                item.count = index+1;
+                        if(!item.deleted){
+		                  subCommentsData.push(item);
                         }
-                        index++;
-                        iterateAndFetch();
-                    })
-                    .done();
-                }
-                else{
-                    _this.setState({
-                        subCommentsLoading: false,
-                        subCommentsHidden: false,
-                        subCommentsData: subCommentsData
-                    });
-                    return;
-                }
-            }
-            iterateAndFetch();
+		                index++;
+		                iterateAndFetch();
+		            })
+		            .done();
+		        }
+		        else {
+		            _this.setState({
+		            	subCommentsLoading: false,
+		            	subCommentsHidden: false,
+		            	subCommentsData: subCommentsData
+		            });
+		            return;
+		        }
+		    }
+		    iterateAndFetch();
         }
     }
 

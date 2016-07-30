@@ -1,7 +1,6 @@
 {
     "compilerOptions": {
-        "allowJs": true,
-        "module": "commonjs"
+        "allowJs": true
     },
     "exclude": [
         "node_modules"
